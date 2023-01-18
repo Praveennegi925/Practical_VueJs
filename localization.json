@@ -1,0 +1,29 @@
+{
+    "en":{
+        "message":{
+            "Email":"Email",
+            "firstName":"First Name",
+            "lastName":"Last Name",
+            "Price":"Price",
+            "Negotiate":"Negotiate"
+            }
+    },
+    "fr":{
+   "message":{
+           "Email":"Email fr",
+           "firstName":"Nom de famille",
+           "lastName":"Nom de famille",
+           "Price":"Prix",
+           "Negotiate":"Négocier"
+            }
+    },
+    "de":{
+        "message":{
+            "Email":"Email de",
+            "firstName":"Erster Name",
+            "lastName":"Nachname",
+            "Price":"Preis",
+            "Negotiate":"Verhandeln"
+            }
+    }
+}

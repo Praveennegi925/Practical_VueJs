@@ -21,7 +21,8 @@ return new Router({
     },
     {
     	path:'/tutorial',
-    	component:NuxtTutorial}
+    	component:NuxtTutorial
+    }
     
     ],
 })

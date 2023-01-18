@@ -1,3 +1,4 @@
+import  Locales from "./localization.json";
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
@@ -40,9 +41,20 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
+    '@nuxtjs/i18n',
     // https://go.nuxtjs.dev/bootstrap
     'bootstrap-vue/nuxt',
+    '@nuxtjs/axios'
   ],
+  i18n: {
+    locales: ['de','en', 'fr'],
+    defaultLocale: process.env.VUE_APP_I18N_LOCALE || 'en',
+    vueI18n: {
+      fallbackLocale: process.env.VUE_APP_I18N_FALLBACK_LOCALE || 'en',
+      messages: Locales
+    },
+    skipSettingLocaleOnNavigate: true,
+  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
