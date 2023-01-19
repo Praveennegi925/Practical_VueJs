@@ -7,5 +7,8 @@
   },
   "Welcome": {
     "description": "Auto imported from components/Welcome.vue"
+  },
+  "OfferAccept": {
+    "description": "Auto imported from components/offerAccept.vue"
   }
 }

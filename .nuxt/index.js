@@ -1,5 +1,5 @@
 import Vue from 'vue'
-
+import Vuex from 'vuex'
 import Meta from 'vue-meta'
 import ClientOnly from 'vue-client-only'
 import NoSsr from 'vue-no-ssr'
@@ -9,15 +9,19 @@ import NuxtError from './components/nuxt-error.vue'
 import Nuxt from './components/nuxt.js'
 import App from './App.js'
 import { setContext, getLocation, getRouteData, normalizeError } from './utils'
+import { createStore } from './store.js'
 
 /* Plugins */
 
 import nuxt_plugin_plugin_5ae2f35e from 'nuxt_plugin_plugin_5ae2f35e' // Source: ./components/plugin.js (mode: 'all')
 import nuxt_plugin_bootstrapvue_3a1e34ba from 'nuxt_plugin_bootstrapvue_3a1e34ba' // Source: ./bootstrap-vue.js (mode: 'all')
+import nuxt_plugin_axios_617e8918 from 'nuxt_plugin_axios_617e8918' // Source: ./axios.js (mode: 'all')
 import nuxt_plugin_pluginutils_6ecd8947 from 'nuxt_plugin_pluginutils_6ecd8947' // Source: ./nuxt-i18n/plugin.utils.js (mode: 'all')
 import nuxt_plugin_pluginrouting_b0de3e5c from 'nuxt_plugin_pluginrouting_b0de3e5c' // Source: ./nuxt-i18n/plugin.routing.js (mode: 'all')
 import nuxt_plugin_pluginmain_7fd3e846 from 'nuxt_plugin_pluginmain_7fd3e846' // Source: ./nuxt-i18n/plugin.main.js (mode: 'all')
 import nuxt_plugin_router_65b9828a from 'nuxt_plugin_router_65b9828a' // Source: ./router.js (mode: 'all')
+import nuxt_plugin_axios_3566aa80 from 'nuxt_plugin_axios_3566aa80' // Source: ../plugins/axios (mode: 'all')
+import nuxt_plugin_vuexpersist_13f465a2 from 'nuxt_plugin_vuexpersist_13f465a2' // Source: ../plugins/vuex-persist (mode: 'client')
 
 // Component: <ClientOnly>
 Vue.component(ClientOnly.name, ClientOnly)
@@ -59,16 +63,32 @@ Vue.use(Meta, {"keyName":"head","attribute":"data-n-head","ssrAttribute":"data-n
 
 const defaultTransition = {"name":"page","mode":"out-in","appear":true,"appearClass":"appear","appearActiveClass":"appear-active","appearToClass":"appear-to"}
 
+const originalRegisterModule = Vuex.Store.prototype.registerModule
+
+function registerModule (path, rawModule, options = {}) {
+  const preserveState = process.client && (
+    Array.isArray(path)
+      ? !!path.reduce((namespacedState, path) => namespacedState && namespacedState[path], this.state)
+      : path in this.state
+  )
+  return originalRegisterModule.call(this, path, rawModule, { preserveState, ...options })
+}
+
 async function createApp(ssrContext, config = {}) {
   const router = await createRouter(ssrContext, config)
+
+  const store = createStore(ssrContext)
+  // Add this.$router into store actions/mutations
+  store.$router = router
 
   // Create Root instance
 
   // here we inject the router and store to all child components,
   // making them available everywhere as `this.$router` and `this.$store`.
   const app = {
-    head: {"title":"product-negotiation-b2c","htmlAttrs":{"lang":"en"},"meta":[{"charset":"utf-8"},{"name":"viewport","content":"width=device-width, initial-scale=1"},{"hid":"description","name":"description","content":""},{"name":"format-detection","content":"telephone=no"}],"link":[{"rel":"icon","type":"image\u002Fx-icon","href":"\u002Ffavicon.ico"}],"style":[],"script":[]},
+    head: {"title":"product-negotiation-b2c","htmlAttrs":{"lang":"en"},"meta":[{"charset":"utf-8"},{"name":"viewport","content":"width=device-width, initial-scale=1"},{"hid":"description","name":"description","content":""},{"name":"format-detection","content":"telephone=no"}],"link":[{"rel":"icon","type":"image\u002Fx-icon","href":"\u002Ffavicon.ico"},{"rel":"stylesheet","type":"text\u002Fcss","href":"\u002Fcss\u002Fstyle.css"}],"style":[],"script":[]},
 
+    store,
     router,
     nuxt: {
       defaultTransition,
@@ -113,6 +133,9 @@ async function createApp(ssrContext, config = {}) {
     ...App
   }
 
+  // Make app available into store via this.app
+  store.app = app
+
   const next = ssrContext ? ssrContext.next : location => app.router.push(location)
   // Resolve route
   let route
@@ -125,6 +148,7 @@ async function createApp(ssrContext, config = {}) {
 
   // Set context to app.context
   await setContext(app, {
+    store,
     route,
     next,
     error: app.nuxt.error.bind(app),
@@ -151,6 +175,9 @@ async function createApp(ssrContext, config = {}) {
       app.context[key] = value
     }
 
+    // Add into store
+    store[key] = app[key]
+
     // Check if plugin not already installed
     const installKey = '__nuxt_' + key + '_installed__'
     if (Vue[installKey]) {
@@ -172,6 +199,13 @@ async function createApp(ssrContext, config = {}) {
   // Inject runtime config as $config
   inject('config', config)
 
+  if (process.client) {
+    // Replace store state before plugins execution
+    if (window.__NUXT__ && window.__NUXT__.state) {
+      store.replaceState(window.__NUXT__.state)
+    }
+  }
+
   // Add enablePreview(previewData = {}) in context for plugins
   if (process.static && process.client) {
     app.context.enablePreview = function (previewData = {}) {
@@ -189,6 +223,10 @@ async function createApp(ssrContext, config = {}) {
     await nuxt_plugin_bootstrapvue_3a1e34ba(app.context, inject)
   }
 
+  if (typeof nuxt_plugin_axios_617e8918 === 'function') {
+    await nuxt_plugin_axios_617e8918(app.context, inject)
+  }
+
   if (typeof nuxt_plugin_pluginutils_6ecd8947 === 'function') {
     await nuxt_plugin_pluginutils_6ecd8947(app.context, inject)
   }
@@ -203,6 +241,14 @@ async function createApp(ssrContext, config = {}) {
 
   if (typeof nuxt_plugin_router_65b9828a === 'function') {
     await nuxt_plugin_router_65b9828a(app.context, inject)
+  }
+
+  if (typeof nuxt_plugin_axios_3566aa80 === 'function') {
+    await nuxt_plugin_axios_3566aa80(app.context, inject)
+  }
+
+  if (process.client && typeof nuxt_plugin_vuexpersist_13f465a2 === 'function') {
+    await nuxt_plugin_vuexpersist_13f465a2(app.context, inject)
   }
 
   // Lock enablePreview in context
@@ -241,6 +287,7 @@ async function createApp(ssrContext, config = {}) {
   })
 
   return {
+    store,
     app,
     router
   }

@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Welcome from '@/components/Welcome.vue'
 import NuxtTutorial from '@/components/Tutorial.vue'
-
+import offerAccept from '@/components/offerAccept.vue'
 
 Vue.use(Router)
 export function createRouter() {
@@ -22,6 +22,10 @@ return new Router({
     {
     	path:'/tutorial',
     	component:NuxtTutorial
+    },
+    {
+    	path:'/offerAccept',
+    	component:offerAccept
     }
     
     ],

@@ -19,7 +19,8 @@ export default {
       { name: 'format-detection', content: 'telephone=no' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      {rel:'stylesheet',type:'text/css' , href:'/css/style.css'},
     ]
   },
 
@@ -28,7 +29,8 @@ export default {
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [
+  plugins: ['~/plugins/axios',
+  { src: '~/plugins/vuex-persist', ssr: false },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -46,6 +48,13 @@ export default {
     'bootstrap-vue/nuxt',
     '@nuxtjs/axios'
   ],
+  axios: {
+    baseURL:'https://65e8-182-69-180-38.in.ngrok.io',
+    browserBaseURL:'https://65e8-182-69-180-38.in.ngrok.io'
+  },
+  proxy: {
+    '/api/':'https://65e8-182-69-180-38.in.ngrok.io'
+  },
   i18n: {
     locales: ['de','en', 'fr'],
     defaultLocale: process.env.VUE_APP_I18N_LOCALE || 'en',
