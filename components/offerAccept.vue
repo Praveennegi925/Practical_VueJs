@@ -19,29 +19,35 @@ export default{
   data(){
     return{
         offeredPrice:'',
-        shopifyUrl:''
+        shopifyUrl:'',
+        productID:''
     }
   },
   mounted() {
      this.offeredPrice=this.$store.getters.getShopifyDetail.offered_price;
      this.shopifyUrl=this.$store.getters.getShopifyDetail.shop;
+     this.productID=this.$store.getters.getShopifyDetail.productID
   },
   methods:{
     addToCart(){
         let request={
-            id:this.$store.getters.getShopifyDetail.productID,
+            shop:this.$store.getters.getShopifyDetail.shop,
             quantity:this.$store.getters.getShopifyDetail.quantity,
             price:this.offeredPrice,
-            properties: {
-            'Discounted Price': this.offeredPrice
-            }
+            id:this.$store.getters.getShopifyDetail.productID
         };
-        let route=`https://${this.shopifyUrl}/cart/add.js`;
+        let route='/api/add-temp-cart';
         this.$axios.post(route,request,{
             headers:{
           "Access-Control-Allow-Origin":"*"}
          }).then((response)=>{
-          console.log(response.data);
+          if(response.data.token){
+            // console.log(response.data)
+            let token=response.data.token;
+            let handle=response.data.handle;
+               window.top.location=`https://${this.shopifyUrl}/products/${handle}?variant=${this.productID}&pvt_token=${token}`;
+          }
+             
         });
     }
   }

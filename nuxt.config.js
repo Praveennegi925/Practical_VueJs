@@ -49,11 +49,11 @@ export default {
     '@nuxtjs/axios'
   ],
   axios: {
-    baseURL:'https://65e8-182-69-180-38.in.ngrok.io',
-    browserBaseURL:'https://65e8-182-69-180-38.in.ngrok.io'
+    baseURL:'https://bee7-182-69-180-38.in.ngrok.io',
+    browserBaseURL:'https://bee7-182-69-180-38.in.ngrok.io'
   },
   proxy: {
-    '/api/':'https://65e8-182-69-180-38.in.ngrok.io'
+    '/api/':'https://bee7-182-69-180-38.in.ngrok.io'
   },
   i18n: {
     locales: ['de','en', 'fr'],
