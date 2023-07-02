@@ -6,31 +6,31 @@ import {Validator} from 'vee-validate'
 Vue.use(Vuex);
 
 export const state = () => ({
-    shopifyDetail:[]
+   userData:[],
+   userProfileData:[]
 
 });
 
-export const mutations = {
-    setShopifyDetail(state,shopifyDetail){
-        state.shopifyDetail =shopifyDetail;
-    },
-     
+   export const mutations = {
+        setUserData(state,payload){
+          state.userData=payload;
+        },
+        setUserProfileData(state,payload){
+            state.userProfileData=payload;
+          }
     }
 
-    export const actions = {
-        
-       
-    }
 
     export const getters = {
-        getShopifyDetail: state => state.shopifyDetail,
-        
+        getUserData: state => state.userData,
+        getUserProfileData: state => state.userProfileData
     }
 
     export const plugins = [createPersistedState()]
 
     const initialStateCopy = {
-        shopifyDetail:[]
+        userData:[],
+        userProfileData:[]
     }
 
   

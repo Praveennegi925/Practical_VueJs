@@ -1,16 +1,56 @@
-.formStyle form{
-    background-color: rgb(214, 232, 232);
-    margin-top: 80px;
-   
+
+
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+    body{
+        background: #E0EAFC;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #CFDEF3, #E0EAFC);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #CFDEF3, #E0EAFC); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        background-image: url('/images/background-banner.jpg');
+        background-repeat: no-repeat;
+        
+    }
+
+    .register-heading{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .error{
+        color: red;
+    }
+
+    .input::-webkit-outer-spin-button,
+       input::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+            margin: 0;
 }
-.offerAccept{
-   display: flex;
-   justify-content: center;
-   text-decoration: underline;
-   color: rgb(231, 135, 18);
-}
-.offerAccept1{
-    display: flex;
-    justify-content: center;
-    margin-top: 100px;
- }
+
+/* Firefox */
+    input[type="number"] {
+          -moz-appearance: textfield;
+      }
+
+      .modal-header, h4 , .close {
+        background-color:#13274F;
+        color:white !important;
+        text-align: left;
+        font-size: 30px;
+      }
+
+
+      .footer {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        background-color: #f1f1f1;
+        padding: 8px;
+      }      
+
+      
+      

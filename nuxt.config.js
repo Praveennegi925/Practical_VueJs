@@ -8,7 +8,7 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'product-negotiation-b2c',
+    title: 'Practical_Vuejs',
     htmlAttrs: {
       lang: 'en'
     },
@@ -21,12 +21,27 @@ export default {
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       {rel:'stylesheet',type:'text/css' , href:'/css/style.css'},
-    ]
+      { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css', integrity: '...',
+      crossorigin: 'anonymous'},
+      
+    ],
+    script:[
+  
+      {
+      src:"https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js",
+      type:"text/javascript"
+    }, 
+    {
+      src:"https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js",
+      type: "text/javascript",
+    },
+  ],
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
   ],
+
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: ['~/plugins/axios',
@@ -49,11 +64,11 @@ export default {
     '@nuxtjs/axios'
   ],
   axios: {
-    baseURL:'https://bee7-182-69-180-38.in.ngrok.io',
-    browserBaseURL:'https://bee7-182-69-180-38.in.ngrok.io'
+    baseURL:'https://fd4b-182-69-180-38.in.ngrok.io',
+    browserBaseURL:'https://fd4b-182-69-180-38.in.ngrok.io'
   },
   proxy: {
-    '/api/':'https://bee7-182-69-180-38.in.ngrok.io'
+    '/api/':'https://fd4b-182-69-180-38.in.ngrok.io'
   },
   i18n: {
     locales: ['de','en', 'fr'],

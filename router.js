@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Welcome from '@/components/Welcome.vue'
-import NuxtTutorial from '@/components/Tutorial.vue'
-import offerAccept from '@/components/offerAccept.vue'
+import Login from '@/components/Login.vue'
+import userProfile from '@/components/user-profile.vue'
 
 Vue.use(Router)
 export function createRouter() {
@@ -12,22 +12,19 @@ return new Router({
   routes: [
     /*-----routing for search Product------*/
     {
-	      path: '/b2c',      
+	      path: '/',      
 	      component: Welcome
     },
+
     {
-	      path: '/index',      
-	      component: Welcome
+    	path:'/Login',
+    	component:Login
     },
     {
-    	path:'/tutorial',
-    	component:NuxtTutorial
-    },
-    {
-    	path:'/offerAccept',
-    	component:offerAccept
+    	path:'/user-profile',
+    	component:userProfile
     }
-    
+
     ],
 })
 }

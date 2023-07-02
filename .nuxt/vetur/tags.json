@@ -1,14 +1,20 @@
 {
-  "NuxtLogo": {
-    "description": "Auto imported from components/NuxtLogo.vue"
+  "Footer": {
+    "description": "Auto imported from components/Footer.vue"
   },
-  "Tutorial": {
-    "description": "Auto imported from components/Tutorial.vue"
+  "Header": {
+    "description": "Auto imported from components/Header.vue"
+  },
+  "Login": {
+    "description": "Auto imported from components/Login.vue"
+  },
+  "Registration": {
+    "description": "Auto imported from components/Registration.vue"
   },
   "Welcome": {
     "description": "Auto imported from components/Welcome.vue"
   },
-  "OfferAccept": {
-    "description": "Auto imported from components/offerAccept.vue"
+  "UserProfile": {
+    "description": "Auto imported from components/user-profile.vue"
   }
 }
