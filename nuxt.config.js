@@ -63,13 +63,6 @@ export default {
     'bootstrap-vue/nuxt',
     '@nuxtjs/axios'
   ],
-  axios: {
-    baseURL:'https://fd4b-182-69-180-38.in.ngrok.io',
-    browserBaseURL:'https://fd4b-182-69-180-38.in.ngrok.io'
-  },
-  proxy: {
-    '/api/':'https://fd4b-182-69-180-38.in.ngrok.io'
-  },
   i18n: {
     locales: ['de','en', 'fr'],
     defaultLocale: process.env.VUE_APP_I18N_LOCALE || 'en',
